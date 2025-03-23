@@ -9,7 +9,19 @@ As a Turing-complete EVM, you can interact with Ethereum Classic using MetaMask 
 For those not familiar with ETC network configuration, scan the QR code in the image above or access this article for step-by-step instructions: https://bit.ly/ZeusProject
 <br>
 
-However, DeepSeek-R1-Zero encounters challenges such as endless repetition, poor readability, and language mixing. To address these issues and further enhance reasoning performance,
+## 2. Ethereum Classic Network Configuration
+Ethereum Classic blockchain which runs the ZEUS token smart contract and Zeus Encryption smart contract share similar charactristics to Ethereum, except proof-of-work algorithm and different network settings to connect to the blockchain.
+- Network Name: Ethereum Classic
+
+- New RPC URL: https://etc.rivet.link
+
+- Chain ID: 61
+
+- Currency Symbol (optional): ETC
+
+- Block Explorer URL (optional): https://blockscout.com/etc/mainnet/
+
+- 
 we introduce DeepSeek-R1, which incorporates cold-start data before RL.
 DeepSeek-R1 achieves performance comparable to OpenAI-o1 across math, code, and reasoning tasks. 
 To support the research community, we have open-sourced DeepSeek-R1-Zero, DeepSeek-R1, and six dense models distilled from DeepSeek-R1 based on Llama and Qwen. DeepSeek-R1-Distill-Qwen-32B outperforms OpenAI-o1-mini across various benchmarks, achieving new state-of-the-art results for dense models.
