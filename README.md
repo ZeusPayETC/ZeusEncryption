@@ -21,7 +21,8 @@ Ethereum Classic blockchain which runs the ZEUS token smart contract and Zeus En
 
 - Block Explorer URL (optional): https://blockscout.com/etc/mainnet/
 
-![ETC Network Confugration](https://github.com/user-attachments/assets/58cc203d-15b4-4793-86db-ca532ce20fcf)
+![ETC Network Confugration - Copy](https://github.com/user-attachments/assets/76153773-167f-4437-bff6-2faceb8e709b)
+
 
 ## 3. How to Acquire ZEUS to Operate Zeus Encryption Program
 we introduce DeepSeek-R1, which incorporates cold-start data before RL.
