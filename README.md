@@ -30,5 +30,6 @@ ZEUS is an ERC-20 token running on the Ethereum Classic blockchain and can be sw
 
 After acquiring ETC from your favorite CEX, head over to https://app.hebeswap.com and swap some ETC for ZEUS on the decentralised exchange.
 Remember to add the ZEUS token contract address in HebeSwap DeX and add to your token list.
+
 ![HebeSwap Dex - Copy](https://github.com/user-attachments/assets/9e5f72f5-ee0c-4d4f-a492-1d7904db712f)
 
