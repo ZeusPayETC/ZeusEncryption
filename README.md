@@ -34,4 +34,4 @@ Remember to add the ZEUS token contract address in HebeSwap DeX and add to your 
 ![HebeSwap Dex - Copy](https://github.com/user-attachments/assets/9e5f72f5-ee0c-4d4f-a492-1d7904db712f)
 
 ## 4. Future Project Development
-As the community around the project forms and continues to grow in anticipation for the launch of ZEUS Mail, we encourage education to onboard new people to experience the innovative solutions presented by blockchain networks and applications. Follow our social channels for updates on the project including our digital celestial artifacts art. 
+As the community around the project forms and continues to grow in anticipation for the launch of ZEUS Mail, we encourage education to onboard new people to experience the innovative solutions presented by blockchain networks and applications. Follow our social channels for updates on the project including our digital celestial art artifacts. 
