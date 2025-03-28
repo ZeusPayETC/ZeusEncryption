@@ -16,9 +16,9 @@ Ethereum Classic blockchain which runs the ZEUS token smart contract and Zeus En
 
 - New RPC URL: https://etc.rivet.link
 
-- Chain ID: 61
+- Chain ID: ``61``
 
-- Currency Symbol (optional): ETC
+- Currency Symbol (optional): ``ETC``
 
 - Block Explorer URL (optional): https://blockscout.com/etc/mainnet/
 
@@ -27,7 +27,7 @@ Ethereum Classic blockchain which runs the ZEUS token smart contract and Zeus En
 
 ## 3. How to Acquire ZEUS to Operate Zeus Encryption Program
 ZEUS is an ERC-20 token running on the Ethereum Classic blockchain and can be swapped for underlying asset ETC.
-- ZEUS Contract Address: 0x66e97838A985cf070B9F955c4025f1C7825de44F
+- ZEUS Contract Address: ``0x66e97838A985cf070B9F955c4025f1C7825de44F``
 
 After acquiring ETC from your favorite CEX, head over to https://app.hebeswap.com and swap some ETC for ZEUS on the decentralised exchange.
 Remember to add the ZEUS token contract address in HebeSwap DeX and add to your token list.
