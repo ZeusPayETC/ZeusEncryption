@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ZEUS Encryption</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+    
+    /* Splash screen styles */
+    #splash {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: url('https://loud-chocolate-cattle.myfilebase.com/ipfs/QmeUFD3KfgfT8XMpC3d2Uj7cd39228cS1A1G2o5uU3LBr9') no-repeat center center;
+      background-size: cover;
+      z-index: 9999;
+    }
+    
+    body {
+      background: url('https://loud-chocolate-cattle.myfilebase.com/ipfs/QmVJRhfkeiaht43ZbyUuTJyRsvcGqRuThe4zJKQ2Wd2nxB') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    
+    .container {
+      background: rgba(0, 0, 0, 0.8);
+      padding: 20px;
+      border-radius: 12px;
+      width: 400px;
+      color: white;
+      text-align: center;
+      box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
+      display: none; /* Hide initially until splash is removed */
+    }
+    
+    .wallet-section {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      text-align: right;
+    }
+    
+    #connectButton {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    
+    #connectButton:hover {
+      background-color: #0056b3;
+    }
+    
+    #account {
+      display: block;
+      font-size: 12px;
+      margin-top: 5px;
+      color: #ddd;
+    }
+    
+    button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    
+    #depositButton {
+      background-color: #ff9800;
+      color: white;
+    }
+    
+    #depositButton:hover {
+      background-color: #e68900;
+    }
+    
+    #encryptButton {
+      background-color: #28a745;
+      color: white;
+    }
+    
+    #encryptButton:hover {
+      background-color: #218838;
+    }
+    
+    #decryptButton {
+      background-color: #dc3545;
+      color: white;
+    }
+    
+    #decryptButton:hover {
+      background-color: #c82333;
+    }
+    
+    input, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: none;
+      border-radius: 5px;
+    }
+    
+    textarea {
+      resize: none;
+      height: 60px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Splash Screen -->
+  <div id="splash"></div>
+  
+  <!-- Wallet Connect Section -->
+  <div class="wallet-section">
+    <button id="connectButton">Connect Wallet</button>
+    <span id="account">Not connected</span>
+  </div>
+  
+  <!-- Main App Container -->
+  <div class="container" id="mainApp">
+    <h2>ZEUS Encryption</h2>
+    <p>ZEUS Balance: <span id="zeusBalance">0</span></p>
+  
+    <button id="depositButton">Deposit 10,000 ZEUS</button>
+  
+    <label for="passphrase">Passphrase:</label>
+    <input type="password" id="passphrase" placeholder="Enter passphrase">
+  
+    <label for="plaintext">Message to Encrypt:</label>
+    <textarea id="plaintext" placeholder="Enter text"></textarea>
+  
+    <button id="encryptButton">Encrypt & Store</button>
+  
+    <label for="encryptedOutput">Encrypted Message:</label>
+    <!-- Editable field for pasting encrypted message -->
+    <textarea id="encryptedOutput" placeholder="Paste encrypted message here"></textarea>
+  
+    <button id="decryptButton">Decrypt</button>
+  
+    <label for="decryptedOutput">Decrypted Message:</label>
+    <textarea id="decryptedOutput" readonly></textarea>
+  </div>
+  
+  <script>
+    // Splash screen logic: Hide splash and show main app after 2 second
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('splash').style.display = 'none';
+        document.getElementById('mainApp').style.display = 'block';
+      }, 2000);
+    });
+    
+    let provider, signer, account;
+    let zeusContract, tokenContract;
+    const contractAddress = "0xe4b3A345666926E28699638452bb0241d4f5e1ac";
+    let tokenAddress; // Will be fetched dynamically
+  
+    const contractABI = [
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "_zeusTokenAddress",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "user",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "string",
+            "name": "encryptedMessage",
+            "type": "string"
+          }
+        ],
+        "name": "MessageStored",
+        "type": "event"
+      },
+      {
+        "inputs": [],
+        "name": "REQUIRED_ZEUS",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "depositZEUS",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "user",
+            "type": "address"
+          }
+        ],
+        "name": "getStoredMessage",
+        "outputs": [
+          {
+            "internalType": "string",
+            "name": "",
+            "type": "string"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "name": "hasDeposited",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "owner",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "string",
+            "name": "_encryptedMessage",
+            "type": "string"
+          }
+        ],
+        "name": "storeEncryptedMessage",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+          }
+        ],
+        "name": "withdrawZEUS",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "zeusToken",
+        "outputs": [
+          {
+            "internalType": "contract IERC20",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      }
+    ];
+  
+    async function connectWallet() {
+      if (window.ethereum) {
+        provider = new ethers.providers.Web3Provider(window.ethereum);
+        await provider.send("eth_requestAccounts", []);
+        signer = provider.getSigner();
+        account = await signer.getAddress();
+        document.getElementById('account').innerText = account;
+  
+        zeusContract = new ethers.Contract(contractAddress, contractABI, signer);
+        tokenAddress = await zeusContract.zeusToken();
+  
+        const erc20ABI = [
+          "function balanceOf(address) view returns (uint256)",
+          "function decimals() view returns (uint8)",
+          "function approve(address spender, uint256 amount) public returns (bool)",
+          "function allowance(address owner, address spender) view returns (uint256)"
+        ];
+        tokenContract = new ethers.Contract(tokenAddress, erc20ABI, signer);
+  
+        updateZeusBalance();
+      } else {
+        alert("Please install MetaMask!");
+      }
+    }
+  
+    async function updateZeusBalance() {
+      const rawBalance = await tokenContract.balanceOf(account);
+      const decimals = await tokenContract.decimals();
+      const balance = ethers.utils.formatUnits(rawBalance, decimals);
+      document.getElementById('zeusBalance').innerText = balance;
+    }
+  
+    async function depositZEUS() {
+      try {
+        const requiredAmount = ethers.utils.parseUnits("10000", 18);
+        
+        // Check current allowance
+        const allowance = await tokenContract.allowance(account, contractAddress);
+        if (allowance.lt(requiredAmount)) {
+          alert("Approving ZEUS token first...");
+          
+          // Request approval
+          const approveTx = await tokenContract.approve(contractAddress, requiredAmount);
+          await approveTx.wait();
+          alert("Approval confirmed!");
+        }
+  
+        // Now proceed with deposit
+        const tx = await zeusContract.depositZEUS();
+        await tx.wait();
+        alert("Deposit successful!");
+        updateZeusBalance();
+      } catch (error) {
+        console.error("Deposit failed:", error);
+        alert("Failed to deposit ZEUS.");
+      }
+    }
+  
+    function encryptMessage(message, passphrase) {
+      return CryptoJS.AES.encrypt(message, passphrase).toString();
+    }
+  
+    function decryptMessage(encrypted, passphrase) {
+      try {
+        const bytes  = CryptoJS.AES.decrypt(encrypted, passphrase);
+        return bytes.toString(CryptoJS.enc.Utf8);
+      } catch (error) {
+        console.error("Decryption error:", error);
+        return "";
+      }
+    }
+  
+    document.getElementById('connectButton').addEventListener('click', connectWallet);
+    document.getElementById('depositButton').addEventListener('click', depositZEUS);
+  
+    document.getElementById('encryptButton').addEventListener('click', async () => {
+      const passphrase = document.getElementById('passphrase').value;
+      const plaintext = document.getElementById('plaintext').value;
+      if (!passphrase || !plaintext) {
+        alert("Enter both passphrase and message.");
+        return;
+      }
+      const encrypted = encryptMessage(plaintext, passphrase);
+      document.getElementById('encryptedOutput').value = encrypted;
+  
+      try {
+        const tx = await zeusContract.storeEncryptedMessage(encrypted);
+        await tx.wait();
+        alert("Encrypted message stored!");
+      } catch (error) {
+        console.error("Store failed:", error);
+        alert("Failed to store encrypted message.");
+      }
+    });
+  
+    document.getElementById('decryptButton').addEventListener('click', () => {
+      const passphrase = document.getElementById('passphrase').value;
+      const encrypted = document.getElementById('encryptedOutput').value;
+      if (!passphrase || !encrypted) {
+        alert("Provide both passphrase and encrypted message.");
+        return;
+      }
+      document.getElementById('decryptedOutput').value = decryptMessage(encrypted, passphrase);
+    });
+  </script>
+  
+</body>
+</html>
