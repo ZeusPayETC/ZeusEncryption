@@ -40,8 +40,8 @@ You can run Zeus Encryption application locally on your machine using NodeJS and
 - Install NodeJS and open CMD as admin and check the instance of npm server running by typing ``npm -v`` ``Needle In A Haystack``
 - Proceed to install live server globally using this command: ``npm install - g live-server``
 - Once install is complete you can download the ZeusEncryption v1.2 file from GitHub and store in C:\ZeusEncryption
-- Navigate your folder structure using cd.. or cd "FolderName" until your directory points to the C:\ZeusEncryption folder
-- You can now launch the application by typing live-server into CMD command prompt. Wait for application to open on 127.0.0.1:8080
+- Navigate your folder structure using ``cd..`` or ``cd`` "FolderName" until your directory points to the C:\ZeusEncryption folder
+- You can now launch the application by typing ``live-server`` into CMD command prompt. Wait for application to open on 127.0.0.1:8080
 - Zeus Encryption should now open and you can connect your wallet, deposit 10,000 ZEUS and proceed to encrypt/decrypt your data.
 
 ## 5. Future Project Development
