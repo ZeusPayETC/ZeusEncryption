@@ -35,7 +35,7 @@ Remember to add the ZEUS token contract address in HebeSwap DeX and add to your 
 ![HebeSwap Dex - Copy](https://github.com/user-attachments/assets/9e5f72f5-ee0c-4d4f-a492-1d7904db712f)
 
 ## 4. How to Run Zeus Encryption Program Locally on Your Machine
-You can run this application locally on your machine using NodeJS and npm server instace with instructions below:
+You can run Zeus Encryption application locally on your machine using NodeJS and npm server instace with instructions below:
 - Access the NodeJS website and download the NodeJS LTS package https://nodejs.org/en
 - Install NodeJS and open CMD as admin and check the instance of npm server running by typing npm -v
 - Proceed to install live server globally using this command: npm install - g live-server
