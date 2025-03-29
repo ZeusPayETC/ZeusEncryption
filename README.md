@@ -4,7 +4,7 @@ Zeus Encryption is the world's first AES/SHA-256 encryption application running 
 <br>
 ## 1. How to Use Zeus Encryption dApp
 
-We introduce our first decentralized application in the Zeus ecosystem with an AES/SHA-256 encryption program written in Solidity and deployed to Ethereum Classic blockchain. 
+We introduce <a href="https://www.zeusencryption.app/" onclick="window.open('https://www.zeusencryption.app/', '_blank', 'noopener,noreferrer'); return false;">zeusencryption.app</a> our first decentralized application in the Zeus ecosystem with an AES/SHA-256 encryption program written in Solidity and deployed to Ethereum Classic blockchain. 
 As a Turing-complete EVM, you can interact with Ethereum Classic using MetaMask Wallet application to interface with the UI and operate the Zeus Encryption program.
 For those not familiar with ETC network configuration, scan the QR code in the image above or access this article for step-by-step instructions: <a href="https://bit.ly/ZeusProject" onclick="window.open('https://bit.ly/ZeusProject', '_blank', 'noopener,noreferrer'); return false;">Visit Zeus Project</a>
 
