@@ -5,6 +5,15 @@
 /.pnp
 .pnp.js
 
+# Mark README.md as assume-unchanged:
+git update-index --assume-unchanged README.md
+
+# Protect ABI files from modification
+!src/abi/
+
+# If you ever want to re-enable tracking for it:
+# git update-index --no-assume-unchanged README.md
+
 # testing
 /coverage
 
